@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 public class ShootingGame extends JFrame implements Runnable {
     // 이미지 파일 불러오는 툴킷
     Toolkit imageTool = Toolkit.getDefaultToolkit();
-    Image character = imageTool.getImage("./images/mouse.png");
+    Image character = imageTool.getImage("./images/mouse_01.png");
 
     // 이미지 버퍼
     Image buffImg;
