@@ -29,7 +29,7 @@ public class GameFrame extends JFrame {
             @Override
             public void keyTyped(KeyEvent e) {}
             public void keyReleased(KeyEvent e) {
-                // 눌린 키가 무엇인지
+                // 눌러진 키가 무엇인지
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_LEFT:
@@ -44,10 +44,11 @@ public class GameFrame extends JFrame {
                     case KeyEvent.VK_DOWN:
                         panel.dy = 0;
                         break;
-                }
+                }   // 방향키 4개 구분
             }
 
             public void keyPressed(KeyEvent e) {
+                // 눌러진 키가 무엇인지
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_LEFT:
@@ -62,19 +63,19 @@ public class GameFrame extends JFrame {
                     case KeyEvent.VK_DOWN:
                         panel.dy = 8;
                         break;
-                }
+                }   // 방향키 4개 구분
             }
         });
-    }
+    }   // 생성자
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
         Image imgBack, imgPlayer, imgBubble;
         int width, height;  // 패널 사이즈 가지고 오기
-        int x, y, w, h; // x, y:플레이어의 중심 좌표, wh:이미지 절반폭
+        int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
 
         // 적군 객체 참조 변수, 여러 마리 일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+        ArrayList<Bubble> bubbles = new ArrayList<>();
 
         int score;  // 점수
 
@@ -104,7 +105,8 @@ public class GameFrame extends JFrame {
 
             // 이곳에 화가 객체가 있음 → 그림 그리는 작업은 무조건 여기서
 //        g.drawImage(imgBack,0,0,this);  // 배경 그리기
-            for(Bubble b : bubbles) {
+            for(int i = 0; i < bubbles.size(); i++) {
+                Bubble b = bubbles.get(i);
                 g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
             }
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
@@ -119,7 +121,7 @@ public class GameFrame extends JFrame {
             for(int i = bubbles.size()-1; i >= 0; i--) {
                 Bubble b = bubbles.get(i);
                 b.move();
-                if(b.isDead)    // ArrayList에서 제거
+                if(b.isDead == true)    // ArrayList에서 제거
                     bubbles.remove(i);
             }
             x += dx;
@@ -163,9 +165,9 @@ public class GameFrame extends JFrame {
                 panel.makeBubble();
                 panel.move();
                 panel.checkCollision(); // 충돌 체크 기능 호출
-                panel.repaint();    // GamePanel의 화면 갱신
                 try {   // 너무 빨리 돌아서 천천히 돌도록
-                    sleep(20);
+                    sleep(25);
+                    repaint();
                 } catch (InterruptedException e) {}
             }
         }

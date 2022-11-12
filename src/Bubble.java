@@ -25,7 +25,7 @@ public class Bubble {
         x = rnd.nextInt(width-w*2) + w; // w~width-w
         y = -h;
 
-        dy =+ rnd.nextInt(15) + 1;  // 떨어지는 속도 랜덤
+        dy =+ rnd.nextInt(13) + 1;  // 떨어지는 속도 랜덤
     }
 
     void move() {   // Bubble의 움직이는 기능 메소드
