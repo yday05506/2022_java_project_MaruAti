@@ -69,13 +69,15 @@ public class GameFrame extends JFrame {
     }   // 생성자
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
-        Image imgBack, imgPlayer, imgBubble;
+        Image imgBack, imgPlayer, imgBubble, imgFire;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
 
-        // 적군 객체 참조 변수, 여러 마리 일 수 있으므로 ArrayList(유동적 배열) 활용
+        // 버블 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Bubble> bubbles = new ArrayList<>();
+        // 불 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Fire> fires = new ArrayList<>();
 
         int score;  // 점수
 
@@ -85,6 +87,7 @@ public class GameFrame extends JFrame {
 //        imgBack = toolkit.getImage("./images/background.png");  // 배경
             imgPlayer = toolkit.getImage("./images/mouse_01.png");  // 캐릭터
             imgBubble = toolkit.getImage("./images/bubble.png");    // 버블
+            imgFire = toolkit.getImage("./images/fire_02.png"); // 불
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)
@@ -109,6 +112,10 @@ public class GameFrame extends JFrame {
                 Bubble b = bubbles.get(i);
                 g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
             }
+            for(int i = 0; i < fires.size(); i++) {
+                Fire f = fires.get(i);
+                g.drawImage(f.img, f.x-f.w, f.y-f.h, this);
+            }
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
             g.setFont(new Font(null, Font.BOLD, 20));   // 점수 표시
             g.drawString("SCORE : " + score, 10, 30);
@@ -124,6 +131,12 @@ public class GameFrame extends JFrame {
                 if(b.isDead == true)    // ArrayList에서 제거
                     bubbles.remove(i);
             }
+            for(int i = fires.size()-1; i >= 0; i--) {
+                Fire f = fires.get(i);
+                f.move();
+                if(f.isDead == true)
+                    fires.remove(i);
+            }
             x += dx;
             y += dy;
             // 플레이어 좌표가 화면 밖으로 나가지 않게
@@ -137,12 +150,20 @@ public class GameFrame extends JFrame {
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
-            int n = rnd.nextInt(15);
+            int n = rnd.nextInt(25);
             if(n == 0) bubbles.add(new Bubble(imgBubble, width, height));
         }
 
+        void makeFire() {   // 불 생성 메소드
+            if(width == 0 || height == 0) return;
+
+            Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
+            int n = rnd.nextInt(40);
+            if(n == 0) fires.add(new Fire(imgFire, width, height));
+        }
+
         // 충돌 체크 작업 계산 메소드
-        void checkCollision() { // 플레이어와 적군의 충돌
+        void BubbleCheckCollision() { // 플레이어와 버블의 충돌
             for(Bubble b : bubbles) {
                 int left = b.x - b.w;
                 int right = b.x + b.w;
@@ -155,6 +176,20 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+
+        void FireCheckCollision() {
+            for(Fire f : fires) {
+                int left = f.x - f.w;
+                int right = f.x + f.w;
+                int top = f.y - f.h;
+                int bottom = f.y + f.h;
+
+                if(x > left && x < right && y > top && y < bottom) {
+                    f.isDead = true;    // 충돌
+                    score -= 20;
+                }
+            }
+        }
     }
 
     class GameThread extends Thread {
@@ -163,8 +198,10 @@ public class GameFrame extends JFrame {
             while(true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeBubble();
+                panel.makeFire();
                 panel.move();
-                panel.checkCollision(); // 충돌 체크 기능 호출
+                panel.BubbleCheckCollision(); // 충돌 체크 기능 호출
+                panel.FireCheckCollision();
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
