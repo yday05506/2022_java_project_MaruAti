@@ -4,12 +4,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class GameFrame extends JFrame {
     GamePanel panel;
     GameThread gThread;
 
-    public GameFrame() {
+    static int score;   // 점수
+
+    static int CountDown;   // 시간 재기
+
+   public GameFrame() {
         setTitle("식재료 얻기");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // x버튼 누르면 종료
         setBounds(300,300,700,700); // 위치, 크기 정하기
@@ -78,8 +84,6 @@ public class GameFrame extends JFrame {
         ArrayList<Bubble> bubbles = new ArrayList<>();
         // 불 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Fire> fires = new ArrayList<>();
-
-        int score;  // 점수
 
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
