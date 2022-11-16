@@ -4,16 +4,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.TimerTask;
-import java.util.Timer;
 
 public class GameFrame extends JFrame {
     GamePanel panel;
     GameThread gThread;
 
     static int score;   // 점수
-
-    static int CountDown;   // 시간 재기
 
    public GameFrame() {
         setTitle("식재료 얻기");
@@ -85,6 +81,9 @@ public class GameFrame extends JFrame {
         // 불 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Fire> fires = new ArrayList<>();
 
+        private int gTime = 0;  // 타이머
+        private boolean stop;
+
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
             Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -92,6 +91,8 @@ public class GameFrame extends JFrame {
             imgPlayer = toolkit.getImage("./images/mouse_01.png");  // 캐릭터
             imgBubble = toolkit.getImage("./images/bubble.png");    // 버블
             imgFire = toolkit.getImage("./images/fire_02.png"); // 불
+
+            this.stop = false;
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)
