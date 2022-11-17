@@ -14,7 +14,7 @@ public class GameFrame extends JFrame {
    public GameFrame() {
         setTitle("식재료 얻기");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // x버튼 누르면 종료
-        setBounds(300,300,700,700); // 위치, 크기 정하기
+        setBounds(300,300,1980,1080); // 위치, 크기 정하기
         setResizable(false);
 
         panel = new GamePanel();
@@ -87,7 +87,7 @@ public class GameFrame extends JFrame {
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-//        imgBack = toolkit.getImage("./images/background.png");  // 배경
+            imgBack = toolkit.getImage("./images/background.jpg");  // 배경
             imgPlayer = toolkit.getImage("./images/mouse_01.png");  // 캐릭터
             imgBubble = toolkit.getImage("./images/bubble.png");    // 버블
             imgFire = toolkit.getImage("./images/fire_02.png"); // 불
@@ -102,7 +102,7 @@ public class GameFrame extends JFrame {
                 width = getWidth();
                 height = getHeight();
                 // 리사이징
-//            imgBack = imgBack.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                imgBack = imgBack.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 imgPlayer = imgPlayer.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
                 // 플레이어 좌표 계산
                 x = width / 2;
@@ -112,7 +112,7 @@ public class GameFrame extends JFrame {
             }
 
             // 이곳에 화가 객체가 있음 → 그림 그리는 작업은 무조건 여기서
-//        g.drawImage(imgBack,0,0,this);  // 배경 그리기
+            g.drawImage(imgBack,0,0,this);  // 배경 그리기
             for(int i = 0; i < bubbles.size(); i++) {
                 Bubble b = bubbles.get(i);
                 g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
@@ -195,12 +195,6 @@ public class GameFrame extends JFrame {
                 }
             }
         }
-
-        void StopGame() {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {}
-        }
     }
 
     class GameThread extends Thread {
@@ -213,7 +207,6 @@ public class GameFrame extends JFrame {
                 panel.move();
                 panel.BubbleCheckCollision(); // 충돌 체크 기능 호출
                 panel.FireCheckCollision();
-                panel.StopGame();   // 시작 버튼 누르면 조인으로 할까????
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
