@@ -195,6 +195,12 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+
+        void StopGame() {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {}
+        }
     }
 
     class GameThread extends Thread {
@@ -207,6 +213,7 @@ public class GameFrame extends JFrame {
                 panel.move();
                 panel.BubbleCheckCollision(); // 충돌 체크 기능 호출
                 panel.FireCheckCollision();
+                panel.StopGame();   // 시작 버튼 누르면 조인으로 할까????
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
