@@ -75,14 +75,12 @@ public class GameFrame extends JFrame {
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
+        int hp = 3; // 플레이어 체력
 
         // 버블 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Bubble> bubbles = new ArrayList<>();
         // 불 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Fire> fires = new ArrayList<>();
-
-        private int gTime = 0;  // 타이머
-        private boolean stop;
 
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
@@ -91,8 +89,6 @@ public class GameFrame extends JFrame {
             imgPlayer = toolkit.getImage("./images/mouse_01.png");  // 캐릭터
             imgBubble = toolkit.getImage("./images/bubble.png");    // 버블
             imgFire = toolkit.getImage("./images/fire_02.png"); // 불
-
-            this.stop = false;
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)
@@ -124,6 +120,8 @@ public class GameFrame extends JFrame {
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
             g.setFont(new Font(null, Font.BOLD, 20));   // 점수 표시
             g.drawString("SCORE : " + score, 10, 30);
+            g.setFont(new Font(null, Font.BOLD, 20));   // 체력 표시
+            g.drawString("HP : " + hp, 10, 70);
         }
 
         void move() {   // 플레이어 움직이기
@@ -192,6 +190,7 @@ public class GameFrame extends JFrame {
                 if(x > left && x < right && y > top && y < bottom) {
                     f.isDead = true;    // 충돌
                     score -= 20;
+                    hp -= 1;
                 }
             }
         }
@@ -200,7 +199,7 @@ public class GameFrame extends JFrame {
     class GameThread extends Thread {
         @Override
         public void run() {
-            while(true) {
+            while(panel.hp > 0) {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeBubble();
                 panel.makeFire();
