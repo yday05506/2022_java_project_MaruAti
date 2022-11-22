@@ -5,13 +5,13 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameFrame extends JFrame {
+public class Korean extends JFrame {
     GamePanel panel;
     GameThread gThread;
 
     static int score;   // 점수
 
-   public GameFrame() {
+   public Korean() {
         setTitle("식재료 얻기");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // x버튼 누르면 종료
         setBounds(300,300,1980,1080); // 위치, 크기 정하기
@@ -71,14 +71,16 @@ public class GameFrame extends JFrame {
     }   // 생성자
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
-        Image imgBack, imgPlayer, imgBubble, imgFire;
+        Image imgBack, imgPlayer, imgKimchi, imgHam, imgFire;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
         int hp = 3; // 플레이어 체력
 
-        // 버블 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Bubble> bubbles = new ArrayList<>();
+        // 김치 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Kimchi> kimchi = new ArrayList<>();
+        // 햄 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Ham> ham = new ArrayList<>();
         // 불 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Fire> fires = new ArrayList<>();
 
@@ -87,7 +89,8 @@ public class GameFrame extends JFrame {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             imgBack = toolkit.getImage("./images/background.jpg");  // 배경
             imgPlayer = toolkit.getImage("./images/mouse_01.png");  // 캐릭터
-            imgBubble = toolkit.getImage("./images/bubble.png");    // 버블
+            imgKimchi = toolkit.getImage("./images/kimchi.png");    // 김치
+            imgHam = toolkit.getImage("./images/ham.png");  // 햄
             imgFire = toolkit.getImage("./images/fire_02.png"); // 불
         }
 
@@ -109,9 +112,13 @@ public class GameFrame extends JFrame {
 
             // 이곳에 화가 객체가 있음 → 그림 그리는 작업은 무조건 여기서
             g.drawImage(imgBack,0,0,this);  // 배경 그리기
-            for(int i = 0; i < bubbles.size(); i++) {
-                Bubble b = bubbles.get(i);
-                g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
+            for(int i = 0; i < kimchi.size(); i++) {
+                Kimchi k = kimchi.get(i);
+                g.drawImage(k.img, k.x-k.w, k.y-k.h, this);
+            }
+            for(int i = 0; i < ham.size(); i++) {
+                Ham ha = ham.get(i);
+                g.drawImage(ha.img, ha.x-ha.w, ha.y-ha.h, this);
             }
             for(int i = 0; i < fires.size(); i++) {
                 Fire f = fires.get(i);
@@ -125,14 +132,21 @@ public class GameFrame extends JFrame {
         }
 
         void move() {   // 플레이어 움직이기
-            // 버블 움직이기
+            // 김치 움직이기
             // 중간에 배열의 개수 변경될 여지가 있다면
             // 맨 마지막 요소부터 거꾸로 0번 요소까지 역으로 처리
-            for(int i = bubbles.size()-1; i >= 0; i--) {
-                Bubble b = bubbles.get(i);
-                b.move();
-                if(b.isDead == true)    // ArrayList에서 제거
-                    bubbles.remove(i);
+            for(int i = kimchi.size()-1; i >= 0; i--) {
+                Kimchi k = kimchi.get(i);
+                k.move();
+                if(k.isDead == true)    // ArrayList에서 제거
+                    kimchi.remove(i);
+            }
+            // 햄 움직이기
+            for(int i = ham.size()-1; i >= 0; i--) {
+                Ham ha = ham.get(i);
+                ha.move();
+                if(ha.isDead == true)    // ArrayList에서 제거
+                    ham.remove(i);
             }
             for(int i = fires.size()-1; i >= 0; i--) {
                 Fire f = fires.get(i);
@@ -149,12 +163,20 @@ public class GameFrame extends JFrame {
             if(y > height - h) y = height - h;
         }
 
-        void makeBubble()   {   // 버블 생성 메소드
+        void makeKimchi()   {   // 김치 생성 메소드
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
             int n = rnd.nextInt(25);
-            if(n == 0) bubbles.add(new Bubble(imgBubble, width, height));
+            if(n == 0) kimchi.add(new Kimchi(imgKimchi, width, height));
+        }
+
+        void makeHam() {    // 햄 생성 메소드
+            if(width == 0 || height == 0) return;
+
+            Random rnd = new Random();
+            int n = rnd.nextInt(25);
+            if(n == 0) ham.add(new Ham(imgHam, width, height));
         }
 
         void makeFire() {   // 불 생성 메소드
@@ -166,16 +188,30 @@ public class GameFrame extends JFrame {
         }
 
         // 충돌 체크 작업 계산 메소드
-        void BubbleCheckCollision() { // 플레이어와 버블의 충돌
-            for(Bubble b : bubbles) {
-                int left = b.x - b.w;
-                int right = b.x + b.w;
-                int top = b.y - b.h;
-                int bottom = b.y + b.h;
+        void KimchiCheckCollision() { // 플레이어와 버블의 충돌
+            for(Kimchi k : kimchi) {
+                int left = k.x - k.w;
+                int right = k.x + k.w;
+                int top = k.y - k.h;
+                int bottom = k.y + k.h;
 
                 if(x > left && x < right && y > top && y < bottom) {
-                    b.isDead = true;    // 충돌
+                    k.isDead = true;    // 충돌
                     score += 5;
+                }
+            }
+        }
+
+        void HamCheckCollision() { // 플레이어와 버블의 충돌
+            for(Ham ha : ham) {
+                int left = ha.x - ha.w;
+                int right = ha.x + ha.w;
+                int top = ha.y - ha.h;
+                int bottom = ha.y + ha.h;
+
+                if(x > left && x < right && y > top && y < bottom) {
+                    ha.isDead = true;    // 충돌
+                    score += 10;
                 }
             }
         }
@@ -194,16 +230,6 @@ public class GameFrame extends JFrame {
                 }
             }
         }
-
-        void GameStart() {
-            JOptionPane.showMessageDialog(null, "쥐를 움직여 음식을 모아주세요!", "Game Start", JOptionPane.WARNING_MESSAGE);
-        }
-
-        void GameOver() {
-            if(hp <= 0) {
-                JOptionPane.showMessageDialog(null, "Game Over!", "gameover", JOptionPane.WARNING_MESSAGE);
-            }
-        }
     }
 
     class GameThread extends Thread {
@@ -211,13 +237,13 @@ public class GameFrame extends JFrame {
         public void run() {
             while(true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
-                panel.GameStart();
-                panel.makeBubble();
+                panel.makeKimchi();
+                panel.makeHam();
                 panel.makeFire();
                 panel.move();
-                panel.BubbleCheckCollision(); // 충돌 체크 기능 호출
+                panel.KimchiCheckCollision(); // 충돌 체크 기능 호출
+                panel.HamCheckCollision();
                 panel.FireCheckCollision();
-                panel.GameOver();
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
@@ -227,7 +253,7 @@ public class GameFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GameFrame();
+        new Korean();
     }
 
 }
