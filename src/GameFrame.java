@@ -194,18 +194,30 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+
+        void GameStart() {
+            JOptionPane.showMessageDialog(null, "쥐를 움직여 음식을 모아주세요!", "Game Start", JOptionPane.WARNING_MESSAGE);
+        }
+
+        void GameOver() {
+            if(hp <= 0) {
+                JOptionPane.showMessageDialog(null, "Game Over!", "gameover", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }
 
     class GameThread extends Thread {
         @Override
         public void run() {
-            while(panel.hp > 0) {
+            while(true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
+                panel.GameStart();
                 panel.makeBubble();
                 panel.makeFire();
                 panel.move();
                 panel.BubbleCheckCollision(); // 충돌 체크 기능 호출
                 panel.FireCheckCollision();
+                panel.GameOver();
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
