@@ -5,13 +5,13 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Korean extends JFrame {
+public class Japan extends JFrame {
     GamePanel panel;
     GameThread gThread;
 
     static int score;   // 점수
 
-   public Korean() {
+    public Japan() {
         setTitle("식재료 얻기");
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // x버튼 누르면 종료
         setBounds(0,0,1980,1080); // 위치, 크기 정하기
@@ -54,16 +54,16 @@ public class Korean extends JFrame {
                 int keyCode = e.getKeyCode();
                 switch (keyCode) {
                     case KeyEvent.VK_LEFT:
-                        panel.dx = -8;
+                        panel.dx = -10;
                         break;
                     case KeyEvent.VK_RIGHT:
-                        panel.dx = 8;
+                        panel.dx = 10;
                         break;
                     case KeyEvent.VK_UP:
-                        panel.dy = -8;
+                        panel.dy = -10;
                         break;
                     case KeyEvent.VK_DOWN:
-                        panel.dy = 8;
+                        panel.dy = 10;
                         break;
                 }   // 방향키 4개 구분
             }
@@ -180,7 +180,7 @@ public class Korean extends JFrame {
         void makeKimchi()   {   // 김치 생성 메소드
             if(width == 0 || height == 0) return;
 
-            Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
+            Random rnd = new Random();
             int n = rnd.nextInt(25);
             if(n == 0) kimchi.add(new Kimchi(imgKimchi, width, height));
         }
@@ -196,7 +196,7 @@ public class Korean extends JFrame {
         void makeMushroom()   {   // 버섯 생성 메소드
             if(width == 0 || height == 0) return;
 
-            Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
+            Random rnd = new Random();
             int n = rnd.nextInt(25);
             if(n == 0) mushrooms.add(new Mushroom(imgMushroom, width, height));
         }
@@ -286,7 +286,7 @@ public class Korean extends JFrame {
                 panel.MushroomCheckCollision();
                 panel.BubbleCheckCollision();
                 try {   // 너무 빨리 돌아서 천천히 돌도록
-                    sleep(25);
+                    sleep(18);
                     repaint();
                 } catch (InterruptedException e) {}
             }
@@ -295,7 +295,7 @@ public class Korean extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Korean();
+        new Japan();
     }
 
 }

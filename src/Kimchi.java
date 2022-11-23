@@ -16,16 +16,16 @@ public class Kimchi {
         this.height = height;
 
         // 멤버 변수 값 초기화
-        img = imgKimchi.getScaledInstance(64,64,Image.SCALE_SMOOTH);
+        img = imgKimchi.getScaledInstance(100,100,Image.SCALE_SMOOTH);
         // 이미지 절반 넓이
-        w = 32;
-        h = 32;
+        w = 50;
+        h = 50;
 
         Random rnd = new Random();
         x = rnd.nextInt(width-w*2) + w; // w~width-w
         y = -h;
 
-        dy =+ rnd.nextInt(13) + 1;  // 떨어지는 속도 랜덤
+        dy =+ rnd.nextInt(15) + 1;  // 떨어지는 속도 랜덤
     }
 
     void move() {   // 김치의 움직이는 기능 메소드
