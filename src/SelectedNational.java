@@ -4,51 +4,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class SelectedNational extends JFrame {
     public SelectedNational() {
         super("나라 선택");
-        JPanel selectNationPanel = new JPanel();
         setSize(1980, 1080);    // 창 크기 설정
+        setLayout(null);
 
-        ImageIcon imgKorea = new ImageIcon("./images/korea.png");
-        ImageIcon imgJapan = new ImageIcon("./images/japan.png");
-        ImageIcon imgChina = new ImageIcon("./images/china.png");
+        int SCREEN_WIDTH = getScreenWidth();
+        int SCREEN_HEIGHT = getScreenHeight();
 
-        setLayout(new GridLayout(3, 7, 0, 2));
-
-        // 한식 버튼
-        JButton btnKorea = new JButton(imgKorea);
-        btnKorea.setBorderPainted(false);   // 버튼 외곽선 제거
-        btnKorea.setContentAreaFilled(false);   // 버튼 내용 영역 채우지 않음
-        btnKorea.setFocusPainted(false);    // 선택 되었을 때 생기는 테두리 제거
-
-        // 일식 버튼
-        JButton btnJapan = new JButton(imgJapan);
-        btnJapan.setBorderPainted(false);   // 버튼 외곽선 제거
-        btnJapan.setContentAreaFilled(false);   // 버튼 내용 영역 채우지 않음
-        btnJapan.setFocusPainted(false);    // 선택 되었을 때 생기는 테두리 제거
-
-        // 중식 버튼
-        JButton btnChina = new JButton(imgChina);
-        btnChina.setBorderPainted(false);   // 버튼 외곽선 제거
-        btnChina.setContentAreaFilled(false);   // 버튼 내용 영역 채우지 않음
-        btnChina.setFocusPainted(false);    // 선택 되었을 때 생기는 테두리 제거
-
-        selectNationPanel.add(btnKorea);
-        selectNationPanel.add(btnJapan);
-        selectNationPanel.add(btnChina);
-        add(selectNationPanel);
+        // 버튼 크기,  위치
+        int Button_X = SCREEN_WIDTH/2;
+        int Button_Y = SCREEN_WIDTH/4 + SCREEN_WIDTH/31;
+        int Button_YPlus = SCREEN_WIDTH/16;
 
         Dimension frameSize = getSize();
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
-        // 화면 중앙에 띄우기
-        setLocation((windowSize.width - frameSize.width) / 2, (windowSize.height - frameSize.height) / 2);
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    // x 누르면 종료
-        setVisible(true);
-        setBackground(Color.white);
+        // 한식 버튼
+        Image imgKorea = new ImageIcon("./images/korea.png").getImage();
+        Image koreaButton1 = imgKorea.getScaledInstance(270, 184, 0);
+        ImageIcon koreaButton = new ImageIcon(koreaButton1);    // image -> imageIcon
+        JButton btnKorea = new JButton(koreaButton);
 
-        // 버튼이 눌렸을 때 윈도우 실행
+        btnKorea.setBounds(Button_X-SCREEN_WIDTH/3, SCREEN_HEIGHT/2, koreaButton1.getWidth(btnKorea), koreaButton1.getHeight(btnKorea));
+        btnKorea.setBorderPainted(false);
+        btnKorea.setContentAreaFilled(false);
+        btnKorea.setFocusPainted(false);
+
+        // 버튼이 눌렸을 때 한식 윈도우 실행
         btnKorea.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +45,58 @@ public class SelectedNational extends JFrame {
                 setVisible(false);  // 창 안 보이게 하기
             }
         });
+
+
+        // 일식 버튼
+        Image imgJapan = new ImageIcon("./images/japan.png").getImage();
+        Image japanButton1 = imgJapan.getScaledInstance(270, 184, 0);
+        ImageIcon japanButton = new ImageIcon(japanButton1);    // image -> imageIcon
+        JButton btnJapan = new JButton(japanButton);
+
+        btnJapan.setBounds(Button_X-SCREEN_WIDTH/16, SCREEN_HEIGHT/2, japanButton1.getWidth(btnJapan), japanButton1.getHeight(btnJapan));
+        btnJapan.setBorderPainted(false);
+        btnJapan.setContentAreaFilled(false);
+        btnJapan.setFocusPainted(false);
+
+        // 버튼이 눌렸을 때 한식 윈도우 실행
+        btnJapan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Japan();   // 버튼 누르면 한식으로
+                setVisible(false);  // 창 안 보이게 하기
+            }
+        });
+
+        // 중식 버튼
+        Image imgChina = new ImageIcon("./images/china.png").getImage();
+        Image chinaButton1 = imgChina.getScaledInstance(270, 184, 0);
+        ImageIcon chinaButton = new ImageIcon(chinaButton1);    // image -> imageIcon
+        JButton btnChina = new JButton(chinaButton);
+
+        btnChina.setBounds(Button_X-SCREEN_WIDTH/3, SCREEN_HEIGHT/5, chinaButton1.getWidth(btnChina), chinaButton1.getHeight(btnChina));
+        btnChina.setBorderPainted(false);
+        btnChina.setContentAreaFilled(false);
+        btnChina.setFocusPainted(false);
+
+        // 버튼이 눌렸을 때 한식 윈도우 실행
+        btnChina.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Chinese();   // 버튼 누르면 중식으로
+                setVisible(false);  // 창 안 보이게 하기
+            }
+        });
+
+        add(btnKorea);
+        add(btnJapan);
+        add(btnChina);
+
+        // 화면 중앙에 띄우기
+        setLocation((windowSize.width - frameSize.width) / 2, (windowSize.height - frameSize.height) / 2);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    // x 누르면 종료
+        setVisible(true);
+        setBackground(Color.white);
 
         btnJapan.addActionListener(new ActionListener() {
             @Override
@@ -66,7 +107,23 @@ public class SelectedNational extends JFrame {
         });
     }
 
+    // 노트북 해상도 구하기
+    protected static int getScreenHeight() {
+        try {
+            return Toolkit.getDefaultToolkit().getScreenSize().height;
+        } catch (Throwable t) {
+            return 1980;
+        }
+    }
+    protected static int getScreenWidth() {
+        try {
+            return Toolkit.getDefaultToolkit().getScreenSize().width;
+        } catch (Throwable t) {
+            return 1080;
+        }
+    }
+
     public static void main(String[] args) {
-        new SelectedNational();
+        new SelectedNational2();
     }
 }
