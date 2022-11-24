@@ -10,18 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelectedNational extends JFrame {
+    Image background;
+
     public SelectedNational() {
         super("나라 선택");
-        setSize(1980, 1080);    // 창 크기 설정
+        setBounds(0,0,1980, 1080);    // 창 크기 설정
         setLayout(null);
 
-        int SCREEN_WIDTH = getScreenWidth();
-        int SCREEN_HEIGHT = getScreenHeight();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        background = toolkit.getImage("./images/background.jpg");   // 배경
 
-        // 버튼 크기,  위치
-        int Button_X = SCREEN_WIDTH/2;
-        int Button_Y = SCREEN_WIDTH/4 + SCREEN_WIDTH/31;
-        int Button_YPlus = SCREEN_WIDTH/16;
+        Container container = getContentPane();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));    // 수평 정렬
 
         Dimension frameSize = getSize();
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,10 +32,11 @@ public class SelectedNational extends JFrame {
         ImageIcon koreaButton = new ImageIcon(koreaButton1);    // image -> imageIcon
         JButton btnKorea = new JButton(koreaButton);
 
-        btnKorea.setBounds(Button_X-SCREEN_WIDTH/3, SCREEN_HEIGHT/2, koreaButton1.getWidth(btnKorea), koreaButton1.getHeight(btnKorea));
+//        btnKorea.setBounds(SCREEN_WIDTH/6, SCREEN_HEIGHT/3, koreaButton1.getWidth(btnKorea), koreaButton1.getHeight(btnKorea));
         btnKorea.setBorderPainted(false);
         btnKorea.setContentAreaFilled(false);
         btnKorea.setFocusPainted(false);
+        btnKorea.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
         // 버튼이 눌렸을 때 한식 윈도우 실행
         btnKorea.addActionListener(new ActionListener() {
@@ -53,12 +54,13 @@ public class SelectedNational extends JFrame {
         ImageIcon japanButton = new ImageIcon(japanButton1);    // image -> imageIcon
         JButton btnJapan = new JButton(japanButton);
 
-        btnJapan.setBounds(Button_X-SCREEN_WIDTH/16, SCREEN_HEIGHT/2, japanButton1.getWidth(btnJapan), japanButton1.getHeight(btnJapan));
+//        btnJapan.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/3, japanButton1.getWidth(btnJapan), japanButton1.getHeight(btnJapan));
         btnJapan.setBorderPainted(false);
         btnJapan.setContentAreaFilled(false);
         btnJapan.setFocusPainted(false);
+        btnJapan.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
-        // 버튼이 눌렸을 때 한식 윈도우 실행
+        // 버튼이 눌렸을 때 일식 윈도우 실행
         btnJapan.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,12 +75,13 @@ public class SelectedNational extends JFrame {
         ImageIcon chinaButton = new ImageIcon(chinaButton1);    // image -> imageIcon
         JButton btnChina = new JButton(chinaButton);
 
-        btnChina.setBounds(Button_X-SCREEN_WIDTH/3, SCREEN_HEIGHT/5, chinaButton1.getWidth(btnChina), chinaButton1.getHeight(btnChina));
+//        btnChina.setBounds(Button_X+400, SCREEN_HEIGHT/2, chinaButton1.getWidth(btnChina), chinaButton1.getHeight(btnChina));
         btnChina.setBorderPainted(false);
         btnChina.setContentAreaFilled(false);
         btnChina.setFocusPainted(false);
+        btnChina.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
-        // 버튼이 눌렸을 때 한식 윈도우 실행
+        // 버튼이 눌렸을 때 중식 윈도우 실행
         btnChina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,9 +90,12 @@ public class SelectedNational extends JFrame {
             }
         });
 
-        add(btnKorea);
-        add(btnJapan);
-        add(btnChina);
+        container.add(Box.createHorizontalStrut(200));  // 가로 200만큼 빈 컴포넌트 삽입
+        container.add(btnKorea);
+        container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
+        container.add(btnJapan);
+        container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
+        container.add(btnChina);
 
         // 화면 중앙에 띄우기
         setLocation((windowSize.width - frameSize.width) / 2, (windowSize.height - frameSize.height) / 2);
@@ -97,33 +103,9 @@ public class SelectedNational extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    // x 누르면 종료
         setVisible(true);
         setBackground(Color.white);
-
-        btnJapan.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Japan();   // 버튼 누르면 일식으로
-                setVisible(false);  // 창 안 보이게 하기
-            }
-        });
-    }
-
-    // 노트북 해상도 구하기
-    protected static int getScreenHeight() {
-        try {
-            return Toolkit.getDefaultToolkit().getScreenSize().height;
-        } catch (Throwable t) {
-            return 1980;
-        }
-    }
-    protected static int getScreenWidth() {
-        try {
-            return Toolkit.getDefaultToolkit().getScreenSize().width;
-        } catch (Throwable t) {
-            return 1080;
-        }
     }
 
     public static void main(String[] args) {
-        new SelectedNational2();
+        new SelectedNational();
     }
 }
