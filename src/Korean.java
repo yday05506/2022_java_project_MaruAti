@@ -285,17 +285,17 @@ public class Korean extends JFrame {
                 panel.HamCheckCollision();
                 panel.MushroomCheckCollision();
                 panel.BubbleCheckCollision();
-
                 if(panel.hp == 0) {
                     new GameOver();
                     setVisible(false);
-                    System.exit(0);
+                    break;
                 }
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(25);
                     repaint();
                 } catch (InterruptedException e) {}
             }
+
 
         }
     }

@@ -49,7 +49,6 @@ public class SelectedNational extends JFrame {
 
 //        btnJapan.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/3, japanButton1.getWidth(btnJapan), japanButton1.getHeight(btnJapan));
         btnJapan.setBorderPainted(false);
-//        btnJapan.setContentAreaFilled(false);
         btnJapan.setFocusPainted(false);
         btnJapan.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
@@ -70,7 +69,6 @@ public class SelectedNational extends JFrame {
 
 //        btnChina.setBounds(Button_X+400, SCREEN_HEIGHT/2, chinaButton1.getWidth(btnChina), chinaButton1.getHeight(btnChina));
         btnChina.setBorderPainted(false);
-//        btnChina.setContentAreaFilled(false);
         btnChina.setFocusPainted(false);
         btnChina.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 

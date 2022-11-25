@@ -286,6 +286,11 @@ public class Japan extends JFrame {
                 panel.EggCheckCollision();
                 panel.MushroomCheckCollision();
                 panel.BubbleCheckCollision();
+                if(panel.hp == 0) {
+                    new GameOver();
+                    setVisible(false);
+                    break;
+                }
                 try {   // 너무 빨리 돌아서 천천히 돌도록
                     sleep(18);
                     repaint();
