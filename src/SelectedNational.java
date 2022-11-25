@@ -1,24 +1,17 @@
 import javax.swing.*;
-import javax.tools.Tool;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelectedNational extends JFrame {
-    Image background;
 
     public SelectedNational() {
         super("나라 선택");
-        setBounds(0,0,1980, 1080);    // 창 크기 설정
+        setBounds(0, 0, 1980, 1080);    // 창 크기 설정
         setLayout(null);
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        background = toolkit.getImage("./images/background.jpg");   // 배경
+        myPanel nationPanel = new myPanel();
+        setContentPane(nationPanel);
 
         Container container = getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));    // 수평 정렬
@@ -34,7 +27,7 @@ public class SelectedNational extends JFrame {
 
 //        btnKorea.setBounds(SCREEN_WIDTH/6, SCREEN_HEIGHT/3, koreaButton1.getWidth(btnKorea), koreaButton1.getHeight(btnKorea));
         btnKorea.setBorderPainted(false);
-        btnKorea.setContentAreaFilled(false);
+//        btnKorea.setContentAreaFilled(false);
         btnKorea.setFocusPainted(false);
         btnKorea.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
@@ -56,7 +49,7 @@ public class SelectedNational extends JFrame {
 
 //        btnJapan.setBounds(SCREEN_WIDTH/4, SCREEN_HEIGHT/3, japanButton1.getWidth(btnJapan), japanButton1.getHeight(btnJapan));
         btnJapan.setBorderPainted(false);
-        btnJapan.setContentAreaFilled(false);
+//        btnJapan.setContentAreaFilled(false);
         btnJapan.setFocusPainted(false);
         btnJapan.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
@@ -77,7 +70,7 @@ public class SelectedNational extends JFrame {
 
 //        btnChina.setBounds(Button_X+400, SCREEN_HEIGHT/2, chinaButton1.getWidth(btnChina), chinaButton1.getHeight(btnChina));
         btnChina.setBorderPainted(false);
-        btnChina.setContentAreaFilled(false);
+//        btnChina.setContentAreaFilled(false);
         btnChina.setFocusPainted(false);
         btnChina.setAlignmentX(CENTER_ALIGNMENT);   // 가운데 정렬
 
@@ -90,12 +83,19 @@ public class SelectedNational extends JFrame {
             }
         });
 
+        nationPanel.add(btnKorea);
+        nationPanel.add(btnJapan);
+        nationPanel.add(btnChina);
+
         container.add(Box.createHorizontalStrut(200));  // 가로 200만큼 빈 컴포넌트 삽입
         container.add(btnKorea);
+        btnKorea.setBackground(Color.gray);
         container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
         container.add(btnJapan);
+        btnJapan.setBackground(Color.gray);
         container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
         container.add(btnChina);
+        btnChina.setBackground(Color.gray);
 
         // 화면 중앙에 띄우기
         setLocation((windowSize.width - frameSize.width) / 2, (windowSize.height - frameSize.height) / 2);
@@ -103,6 +103,16 @@ public class SelectedNational extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    // x 누르면 종료
         setVisible(true);
         setBackground(Color.white);
+    }
+
+    class myPanel extends JPanel {
+        ImageIcon background = new ImageIcon("./images/background.jpg");    // 배경
+
+        public void paintComponent(Graphics g) {
+            g.drawImage(background.getImage(),0,0,getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paintComponent(g);
+        }
     }
 
     public static void main(String[] args) {
