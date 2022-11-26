@@ -73,7 +73,7 @@ public class Japan extends JFrame {
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
         ImageIcon imgBack = new ImageIcon("./images/background.jpg");  // 배경
-        Image imgPlayer, imgSushi, imgEgg, imgMushroom, imgBubble;
+        Image imgPlayer, imgSushi, imgTakoyaki, imgDango, imgBubble;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
@@ -81,10 +81,10 @@ public class Japan extends JFrame {
 
         // 초밥 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Food> sushi = new ArrayList<>();
-        // 달걀 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Food> eggs = new ArrayList<>();
-        // 버섯 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Food> mushrooms = new ArrayList<>();
+        // 타코야끼 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Food> takoyakies = new ArrayList<>();
+        // 당고 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Food> dangos = new ArrayList<>();
         // 버블 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Food> bubbles = new ArrayList<>();
 
@@ -93,8 +93,8 @@ public class Japan extends JFrame {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             imgPlayer = toolkit.getImage("./images/mouse.png");  // 캐릭터
             imgSushi = toolkit.getImage("./images/sushi.png");    // 초밥
-            imgEgg = toolkit.getImage("./images/fried_egg.png");  // 달걀
-            imgMushroom = toolkit.getImage("./images/mushroom.png");  // 버섯
+            imgTakoyaki = toolkit.getImage("./images/takoyaki.png");  // 타코야끼
+            imgDango = toolkit.getImage("./images/dango.png");  // 당고
             imgBubble = toolkit.getImage("./images/bubble.png"); // 불
         }
 
@@ -119,13 +119,13 @@ public class Japan extends JFrame {
                 Food s = sushi.get(i);
                 g.drawImage(s.img, s.x-s.w, s.y-s.h, this);
             }
-            for(int i = 0; i < eggs.size(); i++) {
-                Food e = eggs.get(i);
-                g.drawImage(e.img, e.x-e.w, e.y-e.h, this);
+            for(int i = 0; i < takoyakies.size(); i++) {
+                Food t = takoyakies.get(i);
+                g.drawImage(t.img, t.x-t.w, t.y-t.h, this);
             }
-            for(int i = 0; i < mushrooms.size(); i++) {
-                Food m = mushrooms.get(i);
-                g.drawImage(m.img, m.x-m.w, m.y-m.h, this);
+            for(int i = 0; i < dangos.size(); i++) {
+                Food d = dangos.get(i);
+                g.drawImage(d.img, d.x-d.w, d.y-d.h, this);
             }
             for(int i = 0; i < bubbles.size(); i++) {
                 Food b = bubbles.get(i);
@@ -150,19 +150,19 @@ public class Japan extends JFrame {
                 if(s.isDead == true)    // ArrayList에서 제거
                     sushi.remove(i);
             }
-            // 달걀 움직이기
-            for(int i = eggs.size()-1; i >= 0; i--) {
-                Food e = eggs.get(i);
-                e.move();
-                if(e.isDead == true)    // ArrayList에서 제거
-                    eggs.remove(i);
+            // 타코야끼 움직이기
+            for(int i = takoyakies.size()-1; i >= 0; i--) {
+                Food t = takoyakies.get(i);
+                t.move();
+                if(t.isDead == true)    // ArrayList에서 제거
+                    takoyakies.remove(i);
             }
-            // 버섯 움직이기
-            for(int i = mushrooms.size()-1; i >= 0; i--) {
-                Food m = mushrooms.get(i);
-                m.move();
-                if(m.isDead == true)    // ArrayList에서 제거
-                    mushrooms.remove(i);
+            // 당고 움직이기
+            for(int i = dangos.size()-1; i >= 0; i--) {
+                Food d = dangos.get(i);
+                d.move();
+                if(d.isDead == true)    // ArrayList에서 제거
+                    dangos.remove(i);
             }
             // 버블 움직이기
             for(int i = bubbles.size()-1; i >= 0; i--) {
@@ -188,20 +188,20 @@ public class Japan extends JFrame {
             if(n == 0) sushi.add(new Food(imgSushi, width, height));
         }
 
-        void makeEgg() {    // 달걀 생성 메소드
+        void makeTakoyaki() {    // 타코야끼 생성 메소드
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();
             int n = rnd.nextInt(25);
-            if(n == 0) eggs.add(new Food(imgEgg, width, height));
+            if(n == 0) takoyakies.add(new Food(imgTakoyaki, width, height));
         }
 
-        void makeMushroom()   {   // 버섯 생성 메소드
+        void makeDango()   {   // 당고 생성 메소드
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();
             int n = rnd.nextInt(25);
-            if(n == 0) mushrooms.add(new Food(imgMushroom, width, height));
+            if(n == 0) dangos.add(new Food(imgDango, width, height));
         }
 
         void makeBubble() {   // 버블 생성 메소드
@@ -227,29 +227,29 @@ public class Japan extends JFrame {
             }
         }
 
-        void EggCheckCollision() { // 플레이어와 달걀의 충돌
-            for(Food e : eggs) {
-                int left = e.x - e.w;
-                int right = e.x + e.w;
-                int top = e.y - e.h;
-                int bottom = e.y + e.h;
+        void TakoyakiCheckCollision() { // 플레이어와 타코야끼의 충돌
+            for(Food t : takoyakies) {
+                int left = t.x - t.w;
+                int right = t.x + t.w;
+                int top = t.y - t.h;
+                int bottom = t.y + t.h;
 
                 if(x > left && x < right && y > top && y < bottom) {
-                    e.isDead = true;    // 충돌
+                    t.isDead = true;    // 충돌
                     score += 1000;
                 }
             }
         }
 
-        void MushroomCheckCollision() { // 플레이어와 버섯의 충돌
-            for(Food m : mushrooms) {
-                int left = m.x - m.w;
-                int right = m.x + m.w;
-                int top = m.y - m.h;
-                int bottom = m.y + m.h;
+        void DangoCheckCollision() { // 플레이어와 당고의 충돌
+            for(Food d : dangos) {
+                int left = d.x - d.w;
+                int right = d.x + d.w;
+                int top = d.y - d.h;
+                int bottom = d.y + d.h;
 
                 if(x > left && x < right && y > top && y < bottom) {
-                    m.isDead = true;    // 충돌
+                    d.isDead = true;    // 충돌
                     score += 3000;
                 }
             }
@@ -264,7 +264,6 @@ public class Japan extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 10000;
                     hp -= 1;
                 }
             }
@@ -277,16 +276,16 @@ public class Japan extends JFrame {
             while(true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeSushi();
-                panel.makeEgg();
+                panel.makeTakoyaki();
+                panel.makeDango();
                 panel.makeBubble();
-                panel.makeMushroom();
 
                 panel.move();
 
                 // 충돌 체크 기능 호출
                 panel.SushiCheckCollision();
-                panel.EggCheckCollision();
-                panel.MushroomCheckCollision();
+                panel.TakoyakiCheckCollision();
+                panel.DangoCheckCollision();
                 panel.BubbleCheckCollision();
                 if(panel.hp == 0) {
                     new GameOver();

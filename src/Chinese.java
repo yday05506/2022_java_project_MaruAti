@@ -263,7 +263,6 @@ public class Chinese extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 10000;
                     hp -= 1;
                 }
             }
@@ -277,8 +276,8 @@ public class Chinese extends JFrame {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeBokchoy();
                 panel.makeHam();
-                panel.makeBubble();
                 panel.makeMushroom();
+                panel.makeBubble();
 
                 panel.move();
 

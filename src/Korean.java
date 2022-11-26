@@ -72,7 +72,7 @@ public class Korean extends JFrame {
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
         ImageIcon imgBack = new ImageIcon("./images/background.jpg");  // 배경
-        Image imgPlayer, imgKimchi, imgHam, imgMushroom, imgBubble;
+        Image imgPlayer, imgKimchi, imgGreenonion, imgMeat, imgBubble;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
@@ -80,10 +80,10 @@ public class Korean extends JFrame {
 
         // 김치 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Food> kimchi = new ArrayList<>();
-        // 햄 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Food> ham = new ArrayList<>();
-        // 버섯 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
-        ArrayList<Food> mushrooms = new ArrayList<>();
+        // 파 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Food> greenonions = new ArrayList<>();
+        // 고기 객체 참조 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
+        ArrayList<Food> meats = new ArrayList<>();
         // 버블 객체 참죠 변수, 여러 마리일 수 있으므로 ArrayList(유동적 배열) 활용
         ArrayList<Food> bubbles = new ArrayList<>();
 
@@ -92,8 +92,8 @@ public class Korean extends JFrame {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
             imgPlayer = toolkit.getImage("./images/mouse.png");  // 캐릭터
             imgKimchi = toolkit.getImage("./images/kimchi.png");    // 김치
-            imgHam = toolkit.getImage("./images/ham.png");  // 햄
-            imgMushroom = toolkit.getImage("./images/mushroom.png");  // 버섯
+            imgGreenonion = toolkit.getImage("./images/green_onion.png");  // 파
+            imgMeat = toolkit.getImage("./images/meat.png");  // 고기
             imgBubble = toolkit.getImage("./images/bubble.png"); // 불
         }
 
@@ -118,12 +118,12 @@ public class Korean extends JFrame {
                 Food k = kimchi.get(i);
                 g.drawImage(k.img, k.x-k.w, k.y-k.h, this);
             }
-            for(int i = 0; i < ham.size(); i++) {
-                Food ha = ham.get(i);
-                g.drawImage(ha.img, ha.x-ha.w, ha.y-ha.h, this);
+            for(int i = 0; i < greenonions.size(); i++) {
+                Food go = greenonions.get(i);
+                g.drawImage(go.img, go.x-go.w, go.y-go.h, this);
             }
-            for(int i = 0; i < mushrooms.size(); i++) {
-                Food m = mushrooms.get(i);
+            for(int i = 0; i < meats.size(); i++) {
+                Food m = meats.get(i);
                 g.drawImage(m.img, m.x-m.w, m.y-m.h, this);
             }
             for(int i = 0; i < bubbles.size(); i++) {
@@ -147,19 +147,19 @@ public class Korean extends JFrame {
                 if(k.isDead == true)    // ArrayList에서 제거
                     kimchi.remove(i);
             }
-            // 햄 움직이기
-            for(int i = ham.size()-1; i >= 0; i--) {
-                Food ha = ham.get(i);
-                ha.move();
-                if(ha.isDead == true)    // ArrayList에서 제거
-                    ham.remove(i);
+            // 파 움직이기
+            for(int i = greenonions.size()-1; i >= 0; i--) {
+                Food go = greenonions.get(i);
+                go.move();
+                if(go.isDead == true)    // ArrayList에서 제거
+                    greenonions.remove(i);
             }
-            // 버섯 움직이기
-            for(int i = mushrooms.size()-1; i >= 0; i--) {
-                Food m = mushrooms.get(i);
+            // 고기 움직이기
+            for(int i = meats.size()-1; i >= 0; i--) {
+                Food m = meats.get(i);
                 m.move();
                 if(m.isDead == true)    // ArrayList에서 제거
-                    mushrooms.remove(i);
+                    meats.remove(i);
             }
             for(int i = bubbles.size()-1; i >= 0; i--) {
                 Food b = bubbles.get(i);
@@ -184,20 +184,20 @@ public class Korean extends JFrame {
             if(n == 0) kimchi.add(new Food(imgKimchi, width, height));
         }
 
-        void makeHam() {    // 햄 생성 메소드
+        void makeGreenonion() {    // 파 생성 메소드
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();
             int n = rnd.nextInt(25);
-            if(n == 0) ham.add(new Food(imgHam, width, height));
+            if(n == 0) greenonions.add(new Food(imgGreenonion, width, height));
         }
 
-        void makeMushroom()   {   // 버섯 생성 메소드
+        void makeMeat()   {   // 고기 생성 메소드
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
             int n = rnd.nextInt(25);
-            if(n == 0) mushrooms.add(new Food(imgMushroom, width, height));
+            if(n == 0) meats.add(new Food(imgMeat, width, height));
         }
 
         void makeBubble() {   // 버블 생성 메소드
@@ -223,22 +223,22 @@ public class Korean extends JFrame {
             }
         }
 
-        void HamCheckCollision() { // 플레이어와 햄의 충돌
-            for(Food ha : ham) {
-                int left = ha.x - ha.w;
-                int right = ha.x + ha.w;
-                int top = ha.y - ha.h;
-                int bottom = ha.y + ha.h;
+        void GreenonionCheckCollision() { // 플레이어와 파의 충돌
+            for(Food go : greenonions) {
+                int left = go.x - go.w;
+                int right = go.x + go.w;
+                int top = go.y - go.h;
+                int bottom = go.y + go.h;
 
                 if(x > left && x < right && y > top && y < bottom) {
-                    ha.isDead = true;    // 충돌
+                    go.isDead = true;    // 충돌
                     score += 1000;
                 }
             }
         }
 
-        void MushroomCheckCollision() { // 플레이어와 버섯의 충돌
-            for(Food m : mushrooms) {
+        void MeatCheckCollision() { // 플레이어와 고기의 충돌
+            for(Food m : meats) {
                 int left = m.x - m.w;
                 int right = m.x + m.w;
                 int top = m.y - m.h;
@@ -260,7 +260,6 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 10000;
                     hp -= 1;
                 }
             }
@@ -273,16 +272,16 @@ public class Korean extends JFrame {
             while(true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeKimchi();
-                panel.makeHam();
+                panel.makeGreenonion();
+                panel.makeMeat();
                 panel.makeBubble();
-                panel.makeMushroom();
 
                 panel.move();
 
                 // 충돌 체크 기능 호출
                 panel.KimchiCheckCollision();
-                panel.HamCheckCollision();
-                panel.MushroomCheckCollision();
+                panel.GreenonionCheckCollision();
+                panel.MeatCheckCollision();
                 panel.BubbleCheckCollision();
                 if(panel.hp == 0) {
                     new GameOver();

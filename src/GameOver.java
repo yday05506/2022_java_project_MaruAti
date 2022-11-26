@@ -10,15 +10,18 @@ public class GameOver extends JFrame {
         setBounds(0,0,1980,1080);
         setLayout(null);
 
+        BackgroundPanel backPanel = new BackgroundPanel();
+        setContentPane(backPanel);
+
         Container container = getContentPane();
-        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));    // 수평 정렬
+        container.setLayout(new GridLayout(3, 1));
 
         Dimension frameSize = getSize();
         Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // 홈 버튼
         Image imgHome = new ImageIcon("./images/home_btn.png").getImage();
-        Image homeButton1 = imgHome.getScaledInstance(600,600,0);
+        Image homeButton1 = imgHome.getScaledInstance(500,500,0);
         ImageIcon homeButton = new ImageIcon(homeButton1);  // image -> imageIcon
         JButton btnHome = new JButton(homeButton);
 
@@ -38,11 +41,22 @@ public class GameOver extends JFrame {
 
 
         container.add(Box.createHorizontalStrut(650));
+        container.add(Box.createVerticalStrut(10));
         container.add(btnHome);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);    // x 누르면 종료
         setVisible(true);
         setBackground(Color.gray);
+    }
+
+    class BackgroundPanel extends JPanel {
+        ImageIcon background = new ImageIcon("./images/background_gameover.jpg");    // 배경
+
+        public void paintComponent(Graphics g) {
+            g.drawImage(background.getImage(),0,0,getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paintComponent(g);
+        }
     }
 
 
