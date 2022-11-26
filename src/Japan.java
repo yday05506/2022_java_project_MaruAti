@@ -132,9 +132,9 @@ public class Japan extends JFrame {
                 g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
             }
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
-            g.setFont(new Font(null, Font.BOLD, 20));   // 점수 표시
+            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 25));   // 점수 표시
             g.drawString("SCORE : " + score, 10, 30);
-            g.setFont(new Font(null, Font.BOLD, 20));   // 체력 표시
+            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 20));   // 체력 표시
             g.drawString("HP : " + hp, 10, 70);
             setOpaque(false);
             super.paintComponent(g);
