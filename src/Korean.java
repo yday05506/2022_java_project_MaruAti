@@ -133,7 +133,7 @@ public class Korean extends JFrame {
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
             g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 25));   // 점수 표시
             g.drawString("SCORE : " + score, 10, 30);
-            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 20));   // 체력 표시
+            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 25));   // 체력 표시
             g.drawString("HP : " + hp, 10, 70);
         }
 
