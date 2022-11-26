@@ -94,7 +94,7 @@ public class Korean extends JFrame {
             imgKimchi = toolkit.getImage("./images/kimchi.png");    // 김치
             imgGreenonion = toolkit.getImage("./images/green_onion.png");  // 파
             imgMeat = toolkit.getImage("./images/meat.png");  // 고기
-            imgBubble = toolkit.getImage("./images/bubble.png"); // 불
+            imgBubble = toolkit.getImage("./images/bubble.png"); // 버블
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)

@@ -95,7 +95,7 @@ public class Japan extends JFrame {
             imgSushi = toolkit.getImage("./images/sushi.png");    // 초밥
             imgTakoyaki = toolkit.getImage("./images/takoyaki.png");  // 타코야끼
             imgDango = toolkit.getImage("./images/dango.png");  // 당고
-            imgBubble = toolkit.getImage("./images/bubble.png"); // 불
+            imgBubble = toolkit.getImage("./images/bubble.png"); // 버블
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)

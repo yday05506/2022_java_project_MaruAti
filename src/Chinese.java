@@ -94,7 +94,7 @@ public class Chinese extends JFrame {
             imgBokchoy = toolkit.getImage("./images/bok_choy.png");    // 청경채
             imgHam = toolkit.getImage("./images/ham.png");  // 햄
             imgMushroom = toolkit.getImage("./images/mushroom.png");  // 버섯
-            imgBubble = toolkit.getImage("./images/bubble.png"); // 불
+            imgBubble = toolkit.getImage("./images/bubble.png"); // 버블
         }
 
         // 보여질 내용물 작업을 수행하는 메소드 : 자동 실행 (콜백 메소드)
