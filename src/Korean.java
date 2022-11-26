@@ -71,7 +71,8 @@ public class Korean extends JFrame {
     }   // 생성자
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
-        Image imgBack, imgPlayer, imgKimchi, imgHam, imgMushroom, imgBubble;
+        ImageIcon imgBack = new ImageIcon("./images/background.jpg");  // 배경
+        Image imgPlayer, imgKimchi, imgHam, imgMushroom, imgBubble;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
@@ -89,7 +90,6 @@ public class Korean extends JFrame {
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            imgBack = toolkit.getImage("./images/background.jpg");  // 배경
             imgPlayer = toolkit.getImage("./images/mouse.png");  // 캐릭터
             imgKimchi = toolkit.getImage("./images/kimchi.png");    // 김치
             imgHam = toolkit.getImage("./images/ham.png");  // 햄
@@ -104,8 +104,7 @@ public class Korean extends JFrame {
                 width = getWidth();
                 height = getHeight();
                 // 리사이징
-                imgBack = imgBack.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                imgPlayer = imgPlayer.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
+                 imgPlayer = imgPlayer.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
                 // 플레이어 좌표 계산
                 x = width / 2;
                 y = height - 100;
@@ -114,7 +113,7 @@ public class Korean extends JFrame {
             }
 
             // 이곳에 화가 객체가 있음 → 그림 그리는 작업은 무조건 여기서
-            g.drawImage(imgBack,0,0,this);  // 배경 그리기
+            g.drawImage(imgBack.getImage(),0,0,getWidth(), getHeight(), this);  // 배경 그리기
             for(int i = 0; i < kimchi.size(); i++) {
                 Food k = kimchi.get(i);
                 g.drawImage(k.img, k.x-k.w, k.y-k.h, this);

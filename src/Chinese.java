@@ -71,7 +71,8 @@ public class Chinese extends JFrame {
     }   // 생성자
 
     class GamePanel extends JPanel { // 게임 화면 그려낼 Panel
-        Image imgBack, imgPlayer, imgBokchoy, imgHam, imgMushroom, imgBubble;
+        ImageIcon imgBack = new ImageIcon("./images/background.jpg");  // 배경
+        Image imgPlayer, imgBokchoy, imgHam, imgMushroom, imgBubble;
         int width, height;  // 패널 사이즈 가지고 오기
         int x, y, w, h; // xy:플레이어의 중심 좌표, wh:이미지 절반폭
         int dx = 0, dy = 0; // 플레이어 이미지의 이동 속도, 방향
@@ -89,7 +90,6 @@ public class Chinese extends JFrame {
         public GamePanel() {
             // GUI 관련 프로그램의 편의를 위해 만들어진 도구 상자(Toolkit) 객체
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            imgBack = toolkit.getImage("./images/background.jpg");  // 배경
             imgPlayer = toolkit.getImage("./images/mouse.png");  // 캐릭터
             imgBokchoy = toolkit.getImage("./images/bok_choy.png");    // 청경채
             imgHam = toolkit.getImage("./images/ham.png");  // 햄
@@ -104,7 +104,7 @@ public class Chinese extends JFrame {
                 width = getWidth();
                 height = getHeight();
                 // 리사이징
-                imgBack = imgBack.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//                imgBack = imgBack.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 imgPlayer = imgPlayer.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
                 // 플레이어 좌표 계산
                 x = width / 2;
@@ -114,7 +114,7 @@ public class Chinese extends JFrame {
             }
 
             // 이곳에 화가 객체가 있음 → 그림 그리는 작업은 무조건 여기서
-            g.drawImage(imgBack,0,0,this);  // 배경 그리기
+            g.drawImage(imgBack.getImage(),0,0,getWidth(), getHeight(), this);  // 배경 그리기
             for(int i = 0; i < bokChoys.size(); i++) {
                 Food bc = bokChoys.get(i);
                 g.drawImage(bc.img, bc.x-bc.w, bc.y-bc.h, this);
@@ -136,6 +136,8 @@ public class Chinese extends JFrame {
             g.drawString("SCORE : " + score, 10, 30);
             g.setFont(new Font(null, Font.BOLD, 20));   // 체력 표시
             g.drawString("HP : " + hp, 10, 70);
+            setOpaque(false);
+            super.paintComponent(g);
         }
 
         void move() {   // 플레이어 움직이기
@@ -282,7 +284,6 @@ public class Chinese extends JFrame {
 
                 // 충돌 체크 기능 호출
                 panel.BokchoyCheckCollision();
-
                 panel.HamCheckCollision();
                 panel.MushroomCheckCollision();
                 panel.BubbleCheckCollision();
