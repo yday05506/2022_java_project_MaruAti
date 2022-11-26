@@ -261,7 +261,7 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 2000;
+                    score -= 10000;
                     hp -= 1;
                 }
             }

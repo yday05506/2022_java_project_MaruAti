@@ -16,6 +16,7 @@ public class Japan extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);    // x버튼 누르면 종료
         setBounds(0,0,1980,1080); // 위치, 크기 정하기
         setResizable(false);
+        setBackground(Color.gray);
 
         panel = new GamePanel();
         add(panel, BorderLayout.CENTER);
@@ -136,6 +137,8 @@ public class Japan extends JFrame {
             g.drawString("SCORE : " + score, 10, 30);
             g.setFont(new Font(null, Font.BOLD, 20));   // 체력 표시
             g.drawString("HP : " + hp, 10, 70);
+            setOpaque(false);
+            super.paintComponent(g);
         }
 
         void move() {   // 플레이어 움직이기
@@ -220,7 +223,7 @@ public class Japan extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     s.isDead = true;    // 충돌
-                    score += 5;
+                    score += 500;
                 }
             }
         }
@@ -234,7 +237,7 @@ public class Japan extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     e.isDead = true;    // 충돌
-                    score += 10;
+                    score += 1000;
                 }
             }
         }
@@ -248,7 +251,7 @@ public class Japan extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     m.isDead = true;    // 충돌
-                    score += 30;
+                    score += 3000;
                 }
             }
         }
@@ -262,7 +265,7 @@ public class Japan extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 20;
+                    score -= 10000;
                     hp -= 1;
                 }
             }

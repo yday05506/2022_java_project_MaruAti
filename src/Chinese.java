@@ -219,7 +219,7 @@ public class Chinese extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     bc.isDead = true;    // 충돌
-                    score += 5;
+                    score += 500;
                 }
             }
         }
@@ -233,7 +233,7 @@ public class Chinese extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     ha.isDead = true;    // 충돌
-                    score += 10;
+                    score += 1000;
                 }
             }
         }
@@ -247,7 +247,7 @@ public class Chinese extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     m.isDead = true;    // 충돌
-                    score += 30;
+                    score += 3000;
                 }
             }
         }
@@ -261,7 +261,7 @@ public class Chinese extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
-                    score -= 20;
+                    score -= 10000;
                     hp -= 1;
                 }
             }

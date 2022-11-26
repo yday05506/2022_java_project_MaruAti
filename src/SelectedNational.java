@@ -87,13 +87,13 @@ public class SelectedNational extends JFrame {
 
         container.add(Box.createHorizontalStrut(200));  // 가로 200만큼 빈 컴포넌트 삽입
         container.add(btnKorea);
-        btnKorea.setBackground(Color.gray);
+        btnKorea.setBackground(Color.decode("#D9D9D9"));
         container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
         container.add(btnJapan);
-        btnJapan.setBackground(Color.gray);
+        btnJapan.setBackground(Color.decode("#D9D9D9"));
         container.add(Box.createHorizontalStrut(300));  // 가로 300만큼 빈 컴포넌트 삽입
         container.add(btnChina);
-        btnChina.setBackground(Color.gray);
+        btnChina.setBackground(Color.decode("#D9D9D9"));
 
         // 화면 중앙에 띄우기
         setLocation((windowSize.width - frameSize.width) / 2, (windowSize.height - frameSize.height) / 2);
