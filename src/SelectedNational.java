@@ -10,6 +10,8 @@ public class SelectedNational extends JFrame {
         setBounds(0, 0, 1980, 1080);    // 창 크기 설정
         setLayout(null);
 
+        Box boxNation = Box.createHorizontalBox();
+
         myPanel nationPanel = new myPanel();
         setContentPane(nationPanel);
 
@@ -84,6 +86,10 @@ public class SelectedNational extends JFrame {
         nationPanel.add(btnKorea);
         nationPanel.add(btnJapan);
         nationPanel.add(btnChina);
+
+        boxNation.add(btnKorea);
+        boxNation.add(btnJapan);
+        boxNation.add(btnChina);
 
         container.add(Box.createHorizontalStrut(200));  // 가로 200만큼 빈 컴포넌트 삽입
         container.add(btnKorea);
