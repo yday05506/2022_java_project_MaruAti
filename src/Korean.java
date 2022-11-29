@@ -1,7 +1,9 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -218,6 +220,7 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     k.isDead = true;    // 충돌
+                    playMusic();
                     score += 500;
                 }
             }
@@ -232,6 +235,7 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     go.isDead = true;    // 충돌
+                    playMusic();
                     score += 1000;
                 }
             }
@@ -246,6 +250,7 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     m.isDead = true;    // 충돌
+                    playMusic();
                     score += 3000;
                 }
             }
@@ -260,16 +265,38 @@ public class Korean extends JFrame {
 
                 if(x > left && x < right && y > top && y < bottom) {
                     b.isDead = true;    // 충돌
+                    playMusic();
                     hp -= 1;
                 }
             }
         }
     }
 
+    public static void playMusic() {
+        File bgm;
+        AudioInputStream stream;
+        AudioFormat format;
+        DataLine.Info info;
+
+        bgm = new File("audios/MP_Blop.wav");
+        Clip clip;
+
+        try {
+            stream = AudioSystem.getAudioInputStream(bgm);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("err" + e);
+        }
+    }
+
     class GameThread extends Thread {
         @Override
         public void run() {
-            while(true) {
+            while (true) {
                 // 적군 객체 만들어내는 기능 메소드 호출
                 panel.makeKimchi();
                 panel.makeGreenonion();
@@ -283,7 +310,7 @@ public class Korean extends JFrame {
                 panel.GreenonionCheckCollision();
                 panel.MeatCheckCollision();
                 panel.BubbleCheckCollision();
-                if(panel.hp == 0) {
+                if (panel.hp == 0) {
                     new GameOver();
                     setVisible(false);
                     break;

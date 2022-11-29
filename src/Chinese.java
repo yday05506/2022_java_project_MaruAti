@@ -1,7 +1,9 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -132,9 +134,9 @@ public class Chinese extends JFrame {
                 g.drawImage(b.img, b.x-b.w, b.y-b.h, this);
             }
             g.drawImage(imgPlayer, x-w, y-h, this); // 캐릭터
-            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 25));   // 점수 표시
+            g.setFont(new Font(null, Font.BOLD, 25));   // 점수 표시
             g.drawString("SCORE : " + score, 10, 30);
-            g.setFont(new Font("Galmuri7 Regular", Font.BOLD, 25));   // 체력 표시
+            g.setFont(new Font(null, Font.BOLD, 25));   // 체력 표시
             g.drawString("HP : " + hp, 10, 70);
             setOpaque(false);
             super.paintComponent(g);
@@ -207,7 +209,7 @@ public class Chinese extends JFrame {
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
-            int n = rnd.nextInt(40);
+            int n = rnd.nextInt(80);
             if(n == 0) bubbles.add(new Food(imgBubble, width, height));
         }
 
@@ -300,8 +302,29 @@ public class Chinese extends JFrame {
         }
     }
 
+    public static void playMusic() {
+        File bgm;
+        AudioInputStream stream;
+        AudioFormat format;
+        DataLine.Info info;
+
+        bgm = new File("./audios/startDescStory.wav");
+        Clip clip;
+
+        try {
+            stream = AudioSystem.getAudioInputStream(bgm);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("err" + e);
+        }
+
+    }
     public static void main(String[] args) {
+        playMusic();
         new Korean();
     }
-
 }

@@ -25,9 +25,9 @@ public class GameStory extends JFrame {
         ImageIcon homeButton = new ImageIcon(homeButton1);  // image -> imageIcon
         JButton btnHome = new JButton(homeButton);
 
-        btnHome.setBorderPainted(false);
-        btnHome.setContentAreaFilled(false);
-        btnHome.setFocusPainted(false);
+        btnHome.setBorderPainted(false);    // 버튼 외곽선 제거
+        btnHome.setContentAreaFilled(false);    // 버튼 내용 영역 채우기 안 함
+        btnHome.setFocusPainted(false); // 선택했을 때 생기는 테두리 사용 안 함
         btnHome.setAlignmentX(CENTER_ALIGNMENT);    // 가운데 정렬
 
         btnHome.addActionListener(new ActionListener() {

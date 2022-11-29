@@ -208,7 +208,7 @@ public class Japan extends JFrame {
             if(width == 0 || height == 0) return;
 
             Random rnd = new Random();  // 50번에 한 번 꼴로 만들기
-            int n = rnd.nextInt(40);
+            int n = rnd.nextInt(80);
             if(n == 0) bubbles.add(new Food(imgBubble, width, height));
         }
 
