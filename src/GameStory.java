@@ -1,7 +1,9 @@
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class GameStory extends JFrame {
 
@@ -53,14 +55,36 @@ public class GameStory extends JFrame {
         ImageIcon background = new ImageIcon("./images/background_story.jpg");    // 배경
 
         public void paintComponent(Graphics g) {
-            g.drawImage(background.getImage(),10,0,getWidth(), getHeight(), this);
+            g.drawImage(background.getImage(), 10, 0, getWidth(), getHeight(), this);
             setOpaque(false);
             super.paintComponent(g);
         }
     }
 
+    public static void playMusic() {
+        File bgm;
+        AudioInputStream stream;
+        AudioFormat format;
+        DataLine.Info info;
+
+        bgm = new File("audios/startDescStory.wav");
+        Clip clip;
+
+        try {
+            stream = AudioSystem.getAudioInputStream(bgm);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            System.out.println("err" + e);
+        }
+    }
+
 
     public static void main(String[] args) {
+        playMusic();
         new GameStory();
     }
 }
